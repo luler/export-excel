@@ -1,0 +1,26 @@
+{
+  "name": "luler/export-excel",
+  "description": "简单导出excel助手函数",
+  "type": "library",
+  "license": "MIT",
+  "homepage": "https://github.com/luler/export-excel",
+  "authors": [
+    {
+      "name": "luler",
+      "email": "1207032539@qq.com",
+      "homepage": "https://github.com/luler",
+      "role": "Developer"
+    }
+  ],
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require": {
+    "php": ">=7.0",
+    "phpoffice/phpspreadsheet": "^1.10"
+  },
+  "autoload": {
+    "psr-4": {
+      "Luler\\Excel\\": "src/Helpers"
+    }
+  }
+}
