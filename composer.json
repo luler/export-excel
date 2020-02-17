@@ -20,7 +20,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Luler\\Excel\\": "src/Helpers"
+      "Luler\\Excel\\": "src/Excel"
     }
   }
 }
