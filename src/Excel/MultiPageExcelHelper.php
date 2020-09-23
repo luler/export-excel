@@ -76,9 +76,10 @@ class MultiPageExcelHelper
             }
             //设置居中
             $sheet->getStyle('A1:' . $header_arr[$header_titles_columns - 1] . ($banner_rows + $data_rows + 1))->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-
             //所有垂直居中
             $sheet->getStyle('A1:' . $header_arr[$header_titles_columns - 1] . ($banner_rows + $data_rows + 1))->getAlignment()->setVertical(Alignment::VERTICAL_CENTER);
+            //所有自动换行
+            $sheet->getStyle('A1:' . $header_arr[$header_titles_columns - 1] . ($banner_rows + $data_rows + 1))->getAlignment()->setWrapText(true);
         }
 
         //设置excel导出
@@ -160,9 +161,10 @@ class MultiPageExcelHelper
             }
             //设置居中
             $sheet->getStyle('A1:' . $header_arr[$header_titles_columns - 1] . ($banner_rows + $data_rows + 1))->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-
             //所有垂直居中
             $sheet->getStyle('A1:' . $header_arr[$header_titles_columns - 1] . ($banner_rows + $data_rows + 1))->getAlignment()->setVertical(Alignment::VERTICAL_CENTER);
+            //所有自动换行
+            $sheet->getStyle('A1:' . $header_arr[$header_titles_columns - 1] . ($banner_rows + $data_rows + 1))->getAlignment()->setWrapText(true);
         }
 
         //设置excel导出
