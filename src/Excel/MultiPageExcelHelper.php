@@ -19,9 +19,9 @@ class MultiPageExcelHelper
     /**
      * 导出excel（多页）
      * @param $file_name //文件名
-     * @param $banners //大标题  （一维数组）
-     * @param $header_titles //列头标题 （一维数组）
-     * @param $datas //数据  （二维数组）
+     * @param $banners //大标题  （空数组或二维数组）['第一页'=>['大标题']]
+     * @param $header_titles //列头标题 （二维数组）['第一页'=>['列头一']]
+     * @param $datas //数据  （三维数组）['第一页'=>[['第一行数据']]]
      * @param array $widths //宽度设置
      * @param int $height //行高度设置
      * @throws \PhpOffice\PhpSpreadsheet\Exception
@@ -104,9 +104,9 @@ class MultiPageExcelHelper
     /**
      * 导出excel文件(多页)
      * @param $file_name //文件名
-     * @param $banners //大标题  （二维数组）
-     * @param $header_titles //列头标题 （二维数组）
-     * @param $datas //数据  （三维数组）
+     * @param $banners //大标题  （空数组或二维数组）['第一页'=>['大标题']]
+     * @param $header_titles //列头标题 （二维数组）['第一页'=>['列头一']]
+     * @param $datas //数据  （三维数组）['第一页'=>[['第一行数据']]]
      * @param array $widths //宽度设置
      * @param int $height //行高度设置
      * @throws \PhpOffice\PhpSpreadsheet\Exception
