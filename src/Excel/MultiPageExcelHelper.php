@@ -45,8 +45,7 @@ class MultiPageExcelHelper
             $banner_rows = count($banners[$key] ?? []);
             $data_row_start = $banner_rows + 1;//第几行开始写数据
             $header_titles_columns = count($titles);
-            $header_arr = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
-            $header_arr = array_merge($header_arr, ['AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG', 'AH', 'AI', 'AJ', 'AK', 'AL', 'AM', 'AN', 'AO', 'AP', 'AQ', 'AR', 'AS', 'AT', 'AU', 'AV', 'AW', 'AX', 'AY', 'AZ']);
+            $header_arr = self::getColumnAlphabetRange($header_titles_columns + 5); //增加5个列范围，防止溢出
             //插大标题
             for ($i = 0; $i < $banner_rows; $i++) {
                 $sheet->mergeCells('A' . ($i + 1) . ':' . $header_arr[$header_titles_columns - 1] . ($i + 1));
@@ -130,8 +129,7 @@ class MultiPageExcelHelper
             $banner_rows = count($banners[$key] ?? []);
             $data_row_start = $banner_rows + 1;//第几行开始写数据
             $header_titles_columns = count($titles);
-            $header_arr = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
-            $header_arr = array_merge($header_arr, ['AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG', 'AH', 'AI', 'AJ', 'AK', 'AL', 'AM', 'AN', 'AO', 'AP', 'AQ', 'AR', 'AS', 'AT', 'AU', 'AV', 'AW', 'AX', 'AY', 'AZ']);
+            $header_arr = self::getColumnAlphabetRange($header_titles_columns + 5); //增加5个列范围，防止溢出
             //插大标题
             for ($i = 0; $i < $banner_rows; $i++) {
                 $sheet->mergeCells('A' . ($i + 1) . ':' . $header_arr[$header_titles_columns - 1] . ($i + 1));
@@ -173,5 +171,44 @@ class MultiPageExcelHelper
         $writer->save($file_path);
 
         return true;
+    }
+
+    /**
+     * 获取列字母标志范围
+     * @param $count
+     * @return array
+     * @author 我只想看看蓝天 <1207032539@qq.com>
+     */
+    private static function getColumnAlphabetRange($count)
+    {
+        $getColumnAlphabet = function ($count) {
+            $res = [];
+            $from = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+            $mark = $count >= 1;
+            while ($mark) {
+                $index = $count % 26;
+                $count = $count / 26;
+                if ($index == 0 && is_int($count)) {
+                    $index = 26;
+                }
+                if (!empty($res) && $res[0] == 'Z') {
+                    $index--;
+                }
+                array_unshift($res, $from[$index - 1]);
+                if ($count <= 1) {
+                    $mark = false;
+                }
+                $count = floor($count);
+            }
+
+            return join($res);
+        };
+
+        $range = [];
+        for ($i = 1; $i <= $count; $i++) {
+            $range[] = $getColumnAlphabet($i);
+        }
+
+        return $range;
     }
 }
