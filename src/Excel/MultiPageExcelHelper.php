@@ -25,11 +25,12 @@ class MultiPageExcelHelper
      * @param $datas //数据  （三维数组）['第一页'=>[['第一行数据']]]
      * @param array $widths //宽度设置
      * @param int $height //行高度设置
+     * @param bool $is_auto_wrap //是否自动分行
      * @return void
      * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
      * @author 我只想看看蓝天 <1207032539@qq.com>
      */
-    public static function exportMultiPageExcel(string $file_name, array $banners, array $header_titles, array $datas, array $widths = [], int $height = 30)
+    public static function exportMultiPageExcel(string $file_name, array $banners, array $header_titles, array $datas, array $widths = [], int $height = null, $is_auto_wrap = false)
     {
         $php_excel = self::buildSheet($banners, $header_titles, $datas, $widths, $height);
         //设置excel导出
@@ -59,11 +60,12 @@ class MultiPageExcelHelper
      * @param $datas //数据  （三维数组）['第一页'=>[['第一行数据']]]
      * @param array $widths //宽度设置
      * @param int $height //行高度设置
+     * @param bool $is_auto_wrap //是否自动分行
      * @return bool
      * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
      * @author 我只想看看蓝天 <1207032539@qq.com>
      */
-    public static function exportMultiPageExcelFile($file_path, array $banners, array $header_titles, array $datas, array $widths = [], int $height = 30)
+    public static function exportMultiPageExcelFile($file_path, array $banners, array $header_titles, array $datas, array $widths = [], int $height = null, $is_auto_wrap = false)
     {
         $php_excel = self::buildSheet($banners, $header_titles, $datas, $widths, $height);
         //设置excel导出
@@ -81,11 +83,12 @@ class MultiPageExcelHelper
      * @param $datas //数据  （三维数组）['第一页'=>[['第一行数据']]]
      * @param array $widths //宽度设置
      * @param int $height //行高度设置
+     * @param bool $is_auto_wrap //是否自动分行
      * @return Spreadsheet
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      * @author 我只想看看蓝天 <1207032539@qq.com>
      */
-    private static function buildSheet(array $banners, array $header_titles, array $datas, array $widths = [], int $height = 30)
+    private static function buildSheet(array $banners, array $header_titles, array $datas, array $widths = [], int $height = null, $is_auto_wrap = false)
     {
         $php_excel = new Spreadsheet();
         $index = 0;
@@ -116,7 +119,9 @@ class MultiPageExcelHelper
             //插表头标题
             for ($i = 0; $i < $header_titles_columns; $i++) {
                 //设置宽度
-                $sheet->getColumnDimension($header_arr[$i])->setWidth($widths[$i] ?? 24);
+                if (isset($widths[$i]) && is_numeric($widths[$i])) {
+                    $sheet->getColumnDimension($header_arr[$i])->setWidth($widths[$i]);
+                }
                 //设置颜色
                 if (strpos($titles[$i], '*') !== false) {
                     $sheet->getStyle($header_arr[$i] . ($banner_rows + 1))->getFont()->getColor()->setARGB(Color::COLOR_RED);
@@ -130,15 +135,17 @@ class MultiPageExcelHelper
                 }
             }
             //设置行高
-            for ($i = 0; $i < ($banner_rows + $data_rows + 1); $i++) {
-                $sheet->getRowDimension(($i + 1))->setRowHeight($height);
+            if (is_numeric($height)) {
+                for ($i = 0; $i < ($banner_rows + $data_rows + 1); $i++) {
+                    $sheet->getRowDimension(($i + 1))->setRowHeight($height);
+                }
             }
             //设置居中
             $sheet->getStyle('A1:' . $header_arr[$header_titles_columns - 1] . ($banner_rows + $data_rows + 1))->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
             //所有垂直居中
             $sheet->getStyle('A1:' . $header_arr[$header_titles_columns - 1] . ($banner_rows + $data_rows + 1))->getAlignment()->setVertical(Alignment::VERTICAL_CENTER);
             //所有自动换行
-            $sheet->getStyle('A1:' . $header_arr[$header_titles_columns - 1] . ($banner_rows + $data_rows + 1))->getAlignment()->setWrapText(true);
+            $is_auto_wrap && $sheet->getStyle('A1:' . $header_arr[$header_titles_columns - 1] . ($banner_rows + $data_rows + 1))->getAlignment()->setWrapText(true);
         }
 
         return $php_excel;
