@@ -34,16 +34,16 @@ class MultiPageExcelHelper
     {
         $php_excel = self::buildSheet($banners, $header_titles, $datas, $widths, $height);
         //设置excel导出
-        $writer = IOFactory::createWriter($php_excel, 'Xls');
+        $writer = IOFactory::createWriter($php_excel, 'Xlsx');
 
         //中文名兼容各种浏览器
         $ua = $_SERVER["HTTP_USER_AGENT"];
         if (preg_match("/MSIE/", $ua)) {
-            header('Content-Disposition: attachment; filename="' . $file_name . '.xls"');
+            header('Content-Disposition: attachment; filename="' . $file_name . '.xlsx"');
         } else if (preg_match("/Firefox/", $ua)) {
-            header('Content-Disposition: attachment; filename*="utf8\'\'' . $file_name . '.xls"');
+            header('Content-Disposition: attachment; filename*="utf8\'\'' . $file_name . '.xlsx"');
         } else {
-            header('Content-Disposition: attachment; filename=' . urlencode($file_name . '.xls'));
+            header('Content-Disposition: attachment; filename=' . urlencode($file_name . '.xlsx'));
         }
 
         header('Cache-Control: max-age=0');
@@ -69,9 +69,9 @@ class MultiPageExcelHelper
     {
         $php_excel = self::buildSheet($header_titles, $datas, $banners, $widths, $height);
         //设置excel导出
-        $writer = IOFactory::createWriter($php_excel, 'Xls');
+        $writer = IOFactory::createWriter($php_excel, 'Xlsx');
 
-        $writer->save($file_path);
+        $writer->save($file_path . '.xlsx');
 
         return true;
     }

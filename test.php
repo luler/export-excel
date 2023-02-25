@@ -2,7 +2,7 @@
 
 require 'vendor/autoload.php';
 
-\Luler\Excel\MultiPageExcelHelper::exportMultiPageExcelFile('test.xlsx',
+\Luler\Excel\MultiPageExcelHelper::exportMultiPageExcelFile('test',
     [
         '第一页' => ['字段1*', '字段2*', '字段3*', '字段4',]
     ],
