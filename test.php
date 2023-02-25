@@ -4,9 +4,6 @@ require 'vendor/autoload.php';
 
 \Luler\Excel\MultiPageExcelHelper::exportMultiPageExcelFile('test.xlsx',
     [
-        '第一页' => ['大标题1']
-    ],
-    [
         '第一页' => ['字段1*', '字段2*', '字段3*', '字段4',]
     ],
     [
@@ -18,5 +15,8 @@ require 'vendor/autoload.php';
                 '值4',
             ]
         ]
+    ],
+    [
+        '第一页' => ['大标题1'],
     ]
 );

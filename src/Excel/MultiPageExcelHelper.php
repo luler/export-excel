@@ -20,9 +20,9 @@ class MultiPageExcelHelper
     /**
      * 导出excel（多页）
      * @param $file_name //文件名
-     * @param $banners //大标题  （空数组或二维数组）['第一页'=>['大标题']]
      * @param $header_titles //列头标题 （二维数组）['第一页'=>['列头一']]
      * @param $datas //数据  （三维数组）['第一页'=>[['第一行数据']]]
+     * @param $banners //大标题  （空数组或二维数组）['第一页'=>['大标题']]
      * @param array $widths //宽度设置
      * @param int $height //行高度设置
      * @param bool $is_auto_wrap //是否自动分行
@@ -30,7 +30,7 @@ class MultiPageExcelHelper
      * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
      * @author 我只想看看蓝天 <1207032539@qq.com>
      */
-    public static function exportMultiPageExcel(string $file_name, array $banners, array $header_titles, array $datas, array $widths = [], int $height = null, $is_auto_wrap = false)
+    public static function exportMultiPageExcel(string $file_name, array $header_titles, array $datas, array $banners = [], array $widths = [], int $height = null, $is_auto_wrap = false)
     {
         $php_excel = self::buildSheet($banners, $header_titles, $datas, $widths, $height);
         //设置excel导出
@@ -55,9 +55,9 @@ class MultiPageExcelHelper
     /**
      * 导出excel文件(多页)
      * @param $file_path //文件路径
-     * @param $banners //大标题  （空数组或二维数组）['第一页'=>['大标题']]
      * @param $header_titles //列头标题 （二维数组）['第一页'=>['列头一']]
      * @param $datas //数据  （三维数组）['第一页'=>[['第一行数据']]]
+     * @param $banners //大标题  （空数组或二维数组）['第一页'=>['大标题']]
      * @param array $widths //宽度设置
      * @param int $height //行高度设置
      * @param bool $is_auto_wrap //是否自动分行
@@ -65,9 +65,9 @@ class MultiPageExcelHelper
      * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
      * @author 我只想看看蓝天 <1207032539@qq.com>
      */
-    public static function exportMultiPageExcelFile($file_path, array $banners, array $header_titles, array $datas, array $widths = [], int $height = null, $is_auto_wrap = false)
+    public static function exportMultiPageExcelFile($file_path, array $header_titles, array $datas, array $banners = [], array $widths = [], int $height = null, $is_auto_wrap = false)
     {
-        $php_excel = self::buildSheet($banners, $header_titles, $datas, $widths, $height);
+        $php_excel = self::buildSheet($header_titles, $datas, $banners, $widths, $height);
         //设置excel导出
         $writer = IOFactory::createWriter($php_excel, 'Xls');
 
@@ -78,9 +78,9 @@ class MultiPageExcelHelper
 
     /**
      * 构建工作表对象
-     * @param $banners //大标题  （空数组或二维数组）['第一页'=>['大标题']]
      * @param $header_titles //列头标题 （二维数组）['第一页'=>['列头一']]
      * @param $datas //数据  （三维数组）['第一页'=>[['第一行数据']]]
+     * @param $banners //大标题  （空数组或二维数组）['第一页'=>['大标题']]
      * @param array $widths //宽度设置
      * @param int $height //行高度设置
      * @param bool $is_auto_wrap //是否自动分行
@@ -88,7 +88,7 @@ class MultiPageExcelHelper
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      * @author 我只想看看蓝天 <1207032539@qq.com>
      */
-    private static function buildSheet(array $banners, array $header_titles, array $datas, array $widths = [], int $height = null, $is_auto_wrap = false)
+    private static function buildSheet(array $header_titles, array $datas, array $banners = [], array $widths = [], int $height = null, $is_auto_wrap = false)
     {
         $php_excel = new Spreadsheet();
         $index = 0;
