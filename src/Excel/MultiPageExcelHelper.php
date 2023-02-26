@@ -30,7 +30,7 @@ class MultiPageExcelHelper
      * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
      * @author 我只想看看蓝天 <1207032539@qq.com>
      */
-    public static function exportMultiPageExcel(string $file_name, array $header_titles, array $datas, array $banners = [], array $widths = [], int $height = null, $is_auto_wrap = false)
+    public static function exportMultiPageExcel(string $file_name, array $header_titles, array $datas = [], array $banners = [], array $widths = [], int $height = null, $is_auto_wrap = false)
     {
         $php_excel = self::buildSheet($header_titles, $datas, $banners, $widths, $height);
         //设置excel导出
@@ -65,7 +65,7 @@ class MultiPageExcelHelper
      * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
      * @author 我只想看看蓝天 <1207032539@qq.com>
      */
-    public static function exportMultiPageExcelFile($file_path, array $header_titles, array $datas, array $banners = [], array $widths = [], int $height = null, $is_auto_wrap = false)
+    public static function exportMultiPageExcelFile($file_path, array $header_titles, array $datas = [], array $banners = [], array $widths = [], int $height = null, $is_auto_wrap = false)
     {
         $php_excel = self::buildSheet($header_titles, $datas, $banners, $widths, $height);
         //设置excel导出
@@ -88,7 +88,7 @@ class MultiPageExcelHelper
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      * @author 我只想看看蓝天 <1207032539@qq.com>
      */
-    private static function buildSheet(array $header_titles, array $datas, array $banners = [], array $widths = [], int $height = null, $is_auto_wrap = false)
+    private static function buildSheet(array $header_titles, array $datas = [], array $banners = [], array $widths = [], int $height = null, $is_auto_wrap = false)
     {
         $php_excel = new Spreadsheet();
         $index = 0;
@@ -97,12 +97,13 @@ class MultiPageExcelHelper
                 throw new \Exception('请设置excel的标题头');
             }
             if ($index == 0) {
-                $sheet = $php_excel->getActiveSheet()->setTitle($key);
+                $sheet = $php_excel->getActiveSheet();
             } else {
-                $sheet = $php_excel->createSheet($index)->setTitle($key);
+                $sheet = $php_excel->createSheet($index);
             }
+            is_string($key) && $sheet = $sheet->setTitle($key); //设置分页标题
             $index++; //页数添加
-            $data_rows = count($datas[$key]);
+            $data_rows = count($datas[$key] ?? []);
             $banner_rows = count($banners[$key] ?? []);
             $data_row_start = $banner_rows + 1;//第几行开始写数据
             $header_titles_columns = count($titles);
