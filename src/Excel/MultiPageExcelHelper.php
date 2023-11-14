@@ -32,7 +32,7 @@ class MultiPageExcelHelper
      */
     public static function exportMultiPageExcel(string $file_name, array $header_titles, array $datas = [], array $banners = [], array $widths = [], int $height = null, $is_auto_wrap = false)
     {
-        $php_excel = self::buildSheet($header_titles, $datas, $banners, $widths, $height);
+        $php_excel = self::buildSheet($header_titles, $datas, $banners, $widths, $height, $is_auto_wrap);
         //设置excel导出
         $writer = IOFactory::createWriter($php_excel, 'Xlsx');
 
@@ -67,7 +67,7 @@ class MultiPageExcelHelper
      */
     public static function exportMultiPageExcelFile($file_path, array $header_titles, array $datas = [], array $banners = [], array $widths = [], int $height = null, $is_auto_wrap = false)
     {
-        $php_excel = self::buildSheet($header_titles, $datas, $banners, $widths, $height);
+        $php_excel = self::buildSheet($header_titles, $datas, $banners, $widths, $height, $is_auto_wrap);
         //设置excel导出
         $writer = IOFactory::createWriter($php_excel, 'Xlsx');
 
